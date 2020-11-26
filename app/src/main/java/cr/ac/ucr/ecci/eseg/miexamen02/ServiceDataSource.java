@@ -1,15 +1,55 @@
 package cr.ac.ucr.ecci.eseg.miexamen02;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
+import org.json.JSONArray;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceDataSource implements IServiceDataSource {
+    private static final String  URL_JSON ="https://bitbucket.org/lyonv/ci0161_ii2020_practica_examenii/raw/489a3e15b5cd670b1cab5684bcf892e5c7f80066/Tabletop16.json";
     // Se obtiene los items de la lista y los retorna
     // En este método hay que recuperar mediante una tarea asíncronica el archivo json con la clase TableTop.
     @Override
     public List<TableTop> obtainItems(Context context) {
         List<TableTop> items = null;
         return items;
+    }
+
+    // Hay que implementar una tarea asincrónica que reciba el URL y devuelva la lista de TableTop
+
+    private class RecuperarTableTop extends AsyncTask<Void, Void, Void> {
+        String datos = "";
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                URL url = new URL(URL_JSON);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String line = "";
+                while (line != null){
+                    line = bufferedReader.readLine();
+                    datos = datos + line;
+
+                }
+            }
+            catch (Exception e){
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
     }
 }
