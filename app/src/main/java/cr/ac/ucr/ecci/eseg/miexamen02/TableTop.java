@@ -6,26 +6,23 @@ import android.os.Parcelable;
 public class TableTop implements Parcelable {
     private String identificacion;
     private String nombre;
-    private Integer year;
+    private int year;
     private String publisher;
 
     public TableTop() {}
 
-    public TableTop(String identificacion, String nombre, Integer year, String publisher) {
+    public TableTop(String identificacion, String nombre, int year, String publisher) {
         this.identificacion = identificacion;
         this.nombre = nombre;
         this.year = year;
         this.publisher = publisher;
     }
 
+
     protected TableTop(Parcel in) {
         identificacion = in.readString();
         nombre = in.readString();
-        if (in.readByte() == 0) {
-            year = null;
-        } else {
-            year = in.readInt();
-        }
+        year = in.readInt();
         publisher = in.readString();
     }
 
@@ -33,12 +30,7 @@ public class TableTop implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(identificacion);
         dest.writeString(nombre);
-        if (year == null) {
-            dest.writeByte((byte) 0);
-        } else {
-            dest.writeByte((byte) 1);
-            dest.writeInt(year);
-        }
+        dest.writeInt(year);
         dest.writeString(publisher);
     }
 
@@ -79,7 +71,7 @@ public class TableTop implements Parcelable {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
