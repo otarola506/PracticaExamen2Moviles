@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MiExamen02</string>
+    <string name="textIdentificacion">ID</string>
+    <string name="textNombre">Nombre</string>
+    <string name="textYear">Año</string>
+    <string name="textPublisher">Publisher</string>
+
 </resources>
