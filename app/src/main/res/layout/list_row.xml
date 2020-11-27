@@ -18,7 +18,7 @@
             android:textColor="#040404"
             android:textStyle="bold"/>
         <TextView
-            android:id="@+id/identificacion"
+            android:id="@+id/publisher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"

@@ -2,6 +2,9 @@ package cr.ac.ucr.ecci.eseg.miexamen02;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.ArrayAdapter;
+
+import androidx.annotation.UiThread;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +17,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ServiceDataSource implements IServiceDataSource {
     private static final String  URL_JSON ="https://bitbucket.org/lyonv/ci0161_ii2020_practica_examenii/raw/489a3e15b5cd670b1cab5684bcf892e5c7f80066/Tabletop16.json";
@@ -22,13 +26,9 @@ public class ServiceDataSource implements IServiceDataSource {
     private List<TableTop> juegosMesa = new ArrayList<>();
     // Necesito ver como manejo la sincronización de los hilos para que no tire que no recupero nada.
     @Override
-    public List<TableTop> obtainItems(Context context) {
-        recuperarDatos();
-       return juegosMesa;
-    }
-
-    private void recuperarDatos(){
+    public void obtainItems(Context context) {
         new recuperarTableTop().execute();
+
     }
 
 
@@ -49,11 +49,10 @@ public class ServiceDataSource implements IServiceDataSource {
 
                 }
             }
-
             catch (Exception e){
                 e.printStackTrace();
             }
-            return null;
+            return  null;
         }
 
         @Override
@@ -67,7 +66,7 @@ public class ServiceDataSource implements IServiceDataSource {
                     TableTop juego = new TableTop(juegoIndividual.getString("identificacion"),juegoIndividual.getString("nombre"),Integer.parseInt(juegoIndividual.getString("year")),juegoIndividual.getString("publisher"));
                     juegos.add(juego);
                 }
-                juegosMesa = juegos;
+
             }catch (Exception e) {
                 e.printStackTrace();
             }
