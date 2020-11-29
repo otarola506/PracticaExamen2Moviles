@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -61,6 +62,7 @@ public class ServiceDataSource implements IServiceDataSource {
             final List<TableTop> juegos = new ArrayList<>();
             ListView listajuegos = parametroJuegos.getListView();
             Context context = parametroJuegos.getContext();
+            ProgressBar mProgressBar = parametroJuegos.getProgressBar();
             try {
                 JSONObject myTableTop = new JSONObject(datos);
                 JSONArray jsonArray = myTableTop.getJSONArray("miTabletop");
@@ -70,6 +72,7 @@ public class ServiceDataSource implements IServiceDataSource {
                     juegos.add(juego);
                 }
                 listajuegos.setAdapter(new LazyAdapter(juegos, context));
+                mProgressBar.setVisibility(View.INVISIBLE);
                 listajuegos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

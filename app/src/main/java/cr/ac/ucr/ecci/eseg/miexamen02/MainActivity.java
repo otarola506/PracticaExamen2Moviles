@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -16,8 +17,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mListView = (ListView) findViewById(R.id.list);
         mProgressBar = (ProgressBar) findViewById(R.id.progress);
-        ParametroJuegosAsyncTack parametroJuegosAsyncTack = new ParametroJuegosAsyncTack(mListView, getApplicationContext());
+        ParametroJuegosAsyncTack parametroJuegosAsyncTack = new ParametroJuegosAsyncTack(mListView, getApplicationContext(),mProgressBar);
         TableTopInteractor tableTopInteractor = new TableTopInteractor();
+        mProgressBar.setVisibility(View.VISIBLE);
         tableTopInteractor.obtenerJuegos(parametroJuegosAsyncTack);
 
     }
