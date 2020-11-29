@@ -1,9 +1,11 @@
 package cr.ac.ucr.ecci.eseg.miexamen02;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
@@ -56,7 +58,9 @@ public class ServiceDataSource implements IServiceDataSource {
 
         @Override
         protected void onPostExecute(Void Avoid) {
-            List<TableTop> juegos = new ArrayList<>();
+            final List<TableTop> juegos = new ArrayList<>();
+            ListView listajuegos = parametroJuegos.getListView();
+            Context context = parametroJuegos.getContext();
             try {
                 JSONObject myTableTop = new JSONObject(datos);
                 JSONArray jsonArray = myTableTop.getJSONArray("miTabletop");
@@ -65,9 +69,19 @@ public class ServiceDataSource implements IServiceDataSource {
                     TableTop juego = new TableTop(juegoIndividual.getString("identificacion"),juegoIndividual.getString("nombre"),Integer.parseInt(juegoIndividual.getString("year")),juegoIndividual.getString("publisher"));
                     juegos.add(juego);
                 }
-                parametroJuegos.getListView().setAdapter(new LazyAdapter(juegos,parametroJuegos.getContext()));
-
-
+                listajuegos.setAdapter(new LazyAdapter(juegos, context));
+                listajuegos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        TableTop tableTop = new TableTop();
+                        tableTop = juegos.get(i);
+                        Intent intent = new Intent(view.getContext(),ActivityDetalles.class);
+                        // En el intent se le pasa el objeto tabletop
+                        intent.putExtra("tableTop",tableTop);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        view.getContext().startActivity(intent);
+                    }
+                });
             }catch (Exception e) {
                 e.printStackTrace();
             }

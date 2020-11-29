@@ -53,7 +53,7 @@ public class DetallesFragment extends Fragment {
             TextView textNombre = (TextView) v.findViewById(R.id.textNombre);
             textNombre.setText(juego.getNombre());
             TextView textYear = (TextView) v.findViewById(R.id.textAnio);
-            textYear.setText(juego.getYear());
+            textYear.setText(Integer.toString(juego.getYear()));
             TextView textPublisher = (TextView) v.findViewById(R.id.textPublisher);
             textPublisher.setText(juego.getPublisher());
         }
