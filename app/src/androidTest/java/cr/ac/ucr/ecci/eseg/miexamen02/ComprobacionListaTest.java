@@ -36,4 +36,9 @@ public class ComprobacionListaTest {
         onView(withId(R.id.textAnio)).check(matches(withText(TEST_ANIO)));
         onView(withId(R.id.textPublisher)).check(matches(withText(TEST_PUBLISHER)));
     }
+
+    @Test
+    public void  comprobarListaVacia () throws InterruptedException {
+
+    }
 }

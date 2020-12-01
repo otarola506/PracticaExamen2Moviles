@@ -1,8 +1,11 @@
 package cr.ac.ucr.ecci.eseg.miexamen02;
 
+import android.content.Context;
+
 public class TableTopInteractor {
-    public void obtenerJuegos(ParametroJuegosAsyncTack parametroJuegosAsyncTask){
-        ServiceDataSource serviceD = new ServiceDataSource();
-        serviceD.obtainItems(parametroJuegosAsyncTask);
+    // Clase que instancia la clase Service DataSource y ejecuta el obtener los datos
+    public void obtenerDatos(Context context){
+        ServiceDataSource serviceD = new ServiceDataSource(context);
+        serviceD.obtainItems();
     }
 }

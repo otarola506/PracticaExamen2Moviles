@@ -2,26 +2,47 @@ package cr.ac.ucr.ecci.eseg.miexamen02;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements OnFinishTask, AdapterView.OnItemClickListener {
     private ListView mListView;
     private ProgressBar mProgressBar;
+    private List<TableTop> juegosMesa;
+    private TableTopInteractor tableTopInteractor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mListView = (ListView) findViewById(R.id.list);
+        mListView.setOnItemClickListener(this);
         mProgressBar = (ProgressBar) findViewById(R.id.progress);
-        ParametroJuegosAsyncTack parametroJuegosAsyncTack = new ParametroJuegosAsyncTack(mListView, getApplicationContext(),mProgressBar);
-        TableTopInteractor tableTopInteractor = new TableTopInteractor();
+        tableTopInteractor = new TableTopInteractor();
+        tableTopInteractor.obtenerDatos(this);
         mProgressBar.setVisibility(View.VISIBLE);
-        tableTopInteractor.obtenerJuegos(parametroJuegosAsyncTack);
-
     }
 
+    // Método de la interfaz onFinishTask que recibe la lista de juegos.
+    @Override
+    public void onFinishedTask(List<TableTop> juegos) {
+        this.juegosMesa = juegos;
+        mListView.setAdapter(new LazyAdapter(juegos,this));
+        mProgressBar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        TableTop juego = juegosMesa.get(i);
+        Intent intent = new Intent(view.getContext(),ActivityDetalles.class);
+        // En el intent se le pasa el objeto TableTop
+        intent.putExtra("tableTop",juego);
+        view.getContext().startActivity(intent);
+
+    }
 }
