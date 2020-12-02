@@ -31,4 +31,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //test:rules has an internal dependency to test:runner:0.3
+    androidTestCompile 'com.android.support.test:rules:0.3'
+
 }

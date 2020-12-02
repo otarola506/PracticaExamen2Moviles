@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
     private ListView mListView;
     private ProgressBar mProgressBar;
     private List<TableTop> juegosMesa;
+
     private TableTopInteractor tableTopInteractor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityView,
         view.getContext().startActivity(intent);
 
     }
+
+
 
 
 }
