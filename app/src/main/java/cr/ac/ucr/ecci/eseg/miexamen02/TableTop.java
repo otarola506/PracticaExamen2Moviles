@@ -3,6 +3,7 @@ package cr.ac.ucr.ecci.eseg.miexamen02;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+// Clase TableTop que implementa parcelable
 public class TableTop implements Parcelable {
     private String identificacion;
     private String nombre;

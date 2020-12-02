@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+// Actividad de detalles que tiene contenido el fragmento de detalles. Recibe el objeto tableTop y se lo pasa a la actividad de detalles.
 public class ActivityDetalles extends AppCompatActivity {
 
     @Override

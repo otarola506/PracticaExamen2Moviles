@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnFinishTask, AdapterView.OnItemClickListener {
+public class MainActivity extends AppCompatActivity implements MainActivityView, AdapterView.OnItemClickListener {
     private ListView mListView;
     private ProgressBar mProgressBar;
     private List<TableTop> juegosMesa;
@@ -23,19 +23,18 @@ public class MainActivity extends AppCompatActivity implements OnFinishTask, Ada
         mListView = (ListView) findViewById(R.id.list);
         mListView.setOnItemClickListener(this);
         mProgressBar = (ProgressBar) findViewById(R.id.progress);
-        tableTopInteractor = new TableTopInteractor();
-        tableTopInteractor.obtenerDatos(this);
+        tableTopInteractor = new TableTopInteractor(this);
+        tableTopInteractor.iniciarTareaAsyncJuegos(this);
         mProgressBar.setVisibility(View.VISIBLE);
+
     }
 
-    // Método de la interfaz onFinishTask que recibe la lista de juegos.
     @Override
-    public void onFinishedTask(List<TableTop> juegos) {
+    public void setItems(List<TableTop> juegos) {
         this.juegosMesa = juegos;
-        mListView.setAdapter(new LazyAdapter(juegos,this));
         mProgressBar.setVisibility(View.INVISIBLE);
+        mListView.setAdapter( new LazyAdapter(juegos, this ));
     }
-
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         TableTop juego = juegosMesa.get(i);
@@ -45,4 +44,6 @@ public class MainActivity extends AppCompatActivity implements OnFinishTask, Ada
         view.getContext().startActivity(intent);
 
     }
+
+
 }

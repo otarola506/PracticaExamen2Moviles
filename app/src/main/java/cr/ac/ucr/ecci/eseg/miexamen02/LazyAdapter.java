@@ -1,21 +1,14 @@
 package cr.ac.ucr.ecci.eseg.miexamen02;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.io.File;
-import java.util.ArrayList;
-import android.content.res.Resources;
 import java.util.List;
 
+// Lazy Adapter que hereda de BaseAdapter, se utiliza para mostrar la lista de juegos
 public class LazyAdapter extends BaseAdapter {
 
     private List<TableTop> mData;

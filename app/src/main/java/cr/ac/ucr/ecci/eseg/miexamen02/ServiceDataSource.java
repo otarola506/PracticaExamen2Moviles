@@ -13,30 +13,29 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceDataSource implements IServiceDataSource  {
+// Clase Service Data Source que realiza el procesamiento de la tarea asincrónica.
+public class ServiceDataSource {
 
     private static final String  URL_JSON ="https://bitbucket.org/lyonv/ci0161_ii2020_practica_examenii/raw/489a3e15b5cd670b1cab5684bcf892e5c7f80066/Tabletop16.json";
     private Context context;
-
     public ServiceDataSource (Context context){
         this.context = context;
     }
 
-    // Método que llama a la tarea asincrónica que obtiene los items
-    @Override
-    public void obtainItems() {
-        RecuperarTableTop recuperarDatosAsyncTask = new RecuperarTableTop(context);
-        recuperarDatosAsyncTask.execute();
+    // Método que inicia la tarea asincrónica
+    public void iniciarRecuperacionJuegos(TableTopInteractor interactor){
+        RecuperarTableTop recuperarJuegos = new RecuperarTableTop(context, interactor);
+        recuperarJuegos.execute();
 
     }
     // Tarea asincrónica que consulta el URL del json y lo guarda en una lista.
     public static class RecuperarTableTop extends AsyncTask<Void, Void, Void> {
         String datos = "";
         Context context;
-        public OnFinishTask onFinishTask;
-        public RecuperarTableTop(Context context){
+        public IServiceDataSource iServiceDataSource;
+        public RecuperarTableTop(Context context,TableTopInteractor tableTopInteractor){
             this.context = context;
-            onFinishTask = (OnFinishTask) context;
+            iServiceDataSource = (IServiceDataSource) tableTopInteractor ;
 
         }
 
@@ -60,7 +59,7 @@ public class ServiceDataSource implements IServiceDataSource  {
             return null;
         }
 
-        // En el onPost llenamos la lista y llamamos al método onFinishedTask de la interfaz onFinish que recibe la lista
+        // En el onPost llenamos la lista y llamamos al método obtainItems de la interfaz IServiceDataSource
         @Override
         protected void onPostExecute(Void Avoid) {
             final List<TableTop> juegos = new ArrayList<>();
@@ -72,7 +71,7 @@ public class ServiceDataSource implements IServiceDataSource  {
                     TableTop juego = new TableTop(juegoIndividual.getString("identificacion"),juegoIndividual.getString("nombre"),Integer.parseInt(juegoIndividual.getString("year")),juegoIndividual.getString("publisher"));
                     juegos.add(juego);
                 }
-                onFinishTask.onFinishedTask(juegos);
+                iServiceDataSource.obtainItems(juegos);
             }catch (Exception e) {
                 e.printStackTrace();
             }
